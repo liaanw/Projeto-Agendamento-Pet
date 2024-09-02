@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agendamentos</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Agendamentos</h1>
+        <nav>
+            <a href="index.html">Início</a>
+        </nav>
+    </header>
+    
+    <section id="filtro-agendamentos">
+        <button id="filtro-hoje">Mostrar Agendamentos de Hoje</button>
+        <button id="mostrar-todos">Mostrar Todos os Agendamentos</button>
+    </section>
+    
+    <section id="lista-agendamentos">
+        <table id="agendamentos">
+            <thead>
+                <tr>
+                    <th>Nome do Cliente</th>
+                    <th>Nome do Pet</th>
+                    <th>Serviço</th>
+                    <th>Data</th>
+                    <th>Hora</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </section>
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function() {
+            function mostrarAgendamentos(filtrarHoje = false) {
+                const agendamentos = JSON.parse(localStorage.getItem("agendamento")) || [];
+                const $tbody = $('#agendamentos tbody');
+                $tbody.empty();
+
+                const hoje = new Date().toISOString().split('T')[0];
+                
+                agendamentos.forEach(agendamento => {
+                    if (!filtrarHoje || agendamento.data === hoje) {
+                        $tbody.append(`
+                            <tr>
+                                <td>${agendamento.nome_cliente}</td>
+                                <td>${agendamento.nome_pet}</td>
+                                <td>${agendamento.servico}</td>
+                                <td>${agendamento.data}</td>
+                                <td>${agendamento.hora}</td>
+                            </tr>
+                        `);
+                    }
+                });
+            }
+            mostrarAgendamentos();
+
+            $('#filtro-hoje').on('click', function() {
+                mostrarAgendamentos(true);
+            });
+
+            $('#mostrar-todos').on('click', function() {
+                mostrarAgendamentos();
+            });
+        });
+    </script>
+</body>
+</html>

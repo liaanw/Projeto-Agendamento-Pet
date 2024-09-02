@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agendamento de Banho e Tosa</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Agendamento de Banho e Tosa</h1>
+    </header>
+    
+    <main>
+        <section id="agendamento">
+            <h2>Agendar Serviço</h2>
+            <form id="form-agendamento">
+                <label for="nome">Nome do Cliente:</label>
+                <input type="text" id="nome" required>
+                
+                <label for="pet">Nome do Pet:</label>
+                <input type="text" id="pet" required>
+                
+                <label for="servico">Serviço:</label>
+                <select id="servico" required>
+                    <option value="banho">Banho</option>
+                    <option value="tosa">Tosa</option>
+                    <option value="banho-tosa">Banho e Tosa</option>
+                </select>
+                
+                <label for="data">Data:</label>
+                <input type="date" id="data" required>
+                
+                <label for="hora">Hora:</label>
+                <select id="hora" required>
+                </select>
+                
+                <button type="submit" >Agendar</button>
+            </form>
+            
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+    <script
+  src="https://code.jquery.com/jquery-3.7.1.js"
+  integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+  crossorigin="anonymous"></script>
+  <script>
+    $('#form-agendamento').on('submit',function() {
+        
+        try {
+            const armazenamento = JSON.parse(localStorage.getItem('agendamento')) || [];
+            const agendamento = {
+                nome_cliente : $('#nome').val(),
+                nome_pet : $('#pet').val(),
+                servico : $('#servico').val(),
+                data : $('#data').val(),
+                hora : $('#hora').val()
+            }
+            armazenamento.push(agendamento);
+            localStorage.setItem("agendamento",JSON.stringify(armazenamento));
+            alert("Seu Agendamento foi Realizado com Sucesso!");
+        } catch (error) {
+            alert("Seu Agendamento nao ocorreu");
+        }
+    });
+  </script>
+</body>
+</html>
